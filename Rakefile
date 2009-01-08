@@ -19,8 +19,7 @@ Hoe.new('rspec-stories', Spec::Story::VERSION::STRING) do |p|
   p.description = "Behaviour Driven Development for Ruby."
   p.rubyforge_name = 'rspec-stories'
   p.developer('RSpec Development Team', 'rspec-devel@rubyforge.org')
-  p.extra_deps = [["rspec","1.1.11.6"]]
-  p.extra_dev_deps = [["cucumber",">= 0.1.13"]]
+  p.extra_deps = [["rspec",">= 1.1.11"]]
   p.remote_rdoc_dir = "rspec-stories/#{Spec::Story::VERSION::STRING}"
 end
 
@@ -40,14 +39,8 @@ Spec::Rake::SpecTask.new do |t|
   unless ENV['NO_RCOV']
     t.rcov = true
     t.rcov_dir = 'coverage'
-    t.rcov_opts = ['--text-report', '--exclude', "lib/spec.rb,lib/spec/runner.rb,spec\/spec,bin\/spec,examples,\/gems,\/Library\/Ruby,\.autotest,#{ENV['GEM_HOME']}"]
+    t.rcov_opts = ['--exclude', "lib/spec.rb,lib/spec/runner.rb,spec\/spec,bin\/spec,examples,\/gems,\/Library\/Ruby,\.autotest,#{ENV['GEM_HOME']}"]
   end
-end
-
-desc "Run failing examples (see failure output)"
-Spec::Rake::SpecTask.new('failing_examples') do |t|
-  t.spec_files = FileList['failing_examples/**/*_spec.rb']
-  t.spec_opts = ['--options', 'spec/spec.opts']
 end
 
 def egrep(pattern)

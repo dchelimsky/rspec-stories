@@ -2,4 +2,4 @@
 
 * Major enhancements
  
-  * Extracted story runner into it's own gem.
+  * Extracted RSpec's Story Runner into it's own gem.
