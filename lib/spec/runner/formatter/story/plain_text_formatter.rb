@@ -4,7 +4,7 @@ module Spec
   module Runner
     module Formatter
       module Story
-        class PlainTextFormatter < BaseTextFormatter
+        class PlainTextFormatter < ::Spec::Runner::Formatter::BaseTextFormatter
           def initialize(options, where)
             super
             @successful_scenario_count = 0

@@ -116,7 +116,7 @@ EOF
               @reporter.scenario_failed('story_title', 'failed_scenario_name', NameError.new('sup'))
               @reporter.story_ended('story_title', 'narrative')
             
-              @out.string.should include("      <dl class=\"story failed\">\n        <dt>Story: story_title</dt>\n")
+              @out.string.should include("<dl class=\"story failed\">\n        <dt>Story: story_title</dt>\n")
           end
           
           it "should create a failed scenario if one of its steps fails" do

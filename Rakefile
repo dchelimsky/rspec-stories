@@ -3,9 +3,8 @@
 $:.unshift(File.join(File.dirname(__FILE__), 'lib'))
 require 'rubygems'
 require 'hoe'
-require 'spec/version'
+require 'spec/story/version'
 require 'spec/rake/spectask'
-require 'cucumber/rake/task'
 
 class Hoe
   def extra_deps
@@ -14,27 +13,24 @@ class Hoe
   end
 end
 
-Hoe.new('rspec', Spec::VERSION::STRING) do |p|
-  p.summary = Spec::VERSION::SUMMARY
+Hoe.new('rspec-stories', Spec::Story::VERSION::STRING) do |p|
+  p.summary = Spec::Story::VERSION::SUMMARY
   p.url = 'http://rspec.info/'
   p.description = "Behaviour Driven Development for Ruby."
-  p.rubyforge_name = 'rspec'
+  p.rubyforge_name = 'rspec-stories'
   p.developer('RSpec Development Team', 'rspec-devel@rubyforge.org')
+  p.extra_deps = [["rspec","1.1.11.6"]]
   p.extra_dev_deps = [["cucumber",">= 0.1.13"]]
-  p.remote_rdoc_dir = "rspec/#{Spec::VERSION::STRING}"
+  p.remote_rdoc_dir = "rspec-stories/#{Spec::Story::VERSION::STRING}"
 end
 
 ['audit','test','test_deps','default','post_blog'].each do |task|
   Rake.application.instance_variable_get('@tasks').delete(task)
 end
 
-task :verify_rcov => [:spec, :features]
+task :verify_rcov => :spec
 task :default => :verify_rcov
 
-# # Some of the tasks are in separate files since they are also part of the website documentation
-load File.dirname(__FILE__) + '/resources/rake/examples.rake'
-load File.dirname(__FILE__) + '/resources/rake/examples_with_rcov.rake'
-load File.dirname(__FILE__) + '/resources/rake/failing_examples_with_html.rake'
 load File.dirname(__FILE__) + '/resources/rake/verify_rcov.rake'
 
 desc "Run all specs"
@@ -47,9 +43,6 @@ Spec::Rake::SpecTask.new do |t|
     t.rcov_opts = ['--text-report', '--exclude', "lib/spec.rb,lib/spec/runner.rb,spec\/spec,bin\/spec,examples,\/gems,\/Library\/Ruby,\.autotest,#{ENV['GEM_HOME']}"]
   end
 end
-
-desc "Run Cucumber features"
-Cucumber::Rake::Task.new do; end
 
 desc "Run failing examples (see failure output)"
 Spec::Rake::SpecTask.new('failing_examples') do |t|
